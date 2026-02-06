@@ -1,0 +1,14 @@
+# Terraform
+**/.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+
+# Terraform lock (OPCIONAL: pode manter se quiser)
+# *.terraform.lock.hcl
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
