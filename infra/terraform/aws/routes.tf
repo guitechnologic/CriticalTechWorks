@@ -1,12 +1,16 @@
-# Elastic IP for NAT
+# Elastic IP
+# IP público fixo usado pelo NAT Gateway
 resource "aws_eip" "nat" {
   domain = "vpc"
 }
 
-# NAT Gateway (fica em subnet pública)
+# NAT Gateway
+# Permite que subnets privadas acessem a internet
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
-  subnet_id     = aws_subnet.public[0].id
+
+  # NAT fica SEMPRE em subnet pública
+  subnet_id = aws_subnet.public[0].id
 
   tags = {
     Name    = "ctw-nat"
@@ -14,7 +18,8 @@ resource "aws_nat_gateway" "nat" {
   }
 }
 
-# Public Route Table
+# Route Table pública
+# Direciona tráfego para o Internet Gateway
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
@@ -29,13 +34,15 @@ resource "aws_route_table" "public" {
   }
 }
 
+# Associa subnets públicas à route table pública
 resource "aws_route_table_association" "public" {
   count          = 2
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
 
-# Private Route Table
+# Route Table privada
+# Direciona tráfego para o NAT Gateway
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
@@ -50,6 +57,7 @@ resource "aws_route_table" "private" {
   }
 }
 
+# Associa subnets privadas à route table privada
 resource "aws_route_table_association" "private" {
   count          = 2
   subnet_id      = aws_subnet.private[count.index].id

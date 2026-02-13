@@ -1,6 +1,12 @@
+# Cria a VPC principal
 resource "aws_vpc" "main" {
-  cidr_block           = var.vpc_cidr
-  enable_dns_support   = true
+  # Faixa de IPs privados da rede
+  cidr_block = var.vpc_cidr
+
+  # Necessário para resolução de DNS interna
+  enable_dns_support = true
+
+  # Necessário para DNS em recursos como EC2, ALB, EKS
   enable_dns_hostnames = true
 
   tags = {
@@ -9,6 +15,8 @@ resource "aws_vpc" "main" {
   }
 }
 
+# Internet Gateway
+# Permite comunicação da VPC com a internet
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
