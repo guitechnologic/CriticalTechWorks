@@ -51,3 +51,19 @@ resource "aws_instance" "private_app" {
     Role    = "Application"
   }
 }
+
+
+resource "aws_instance" "private_app" {
+  count                  = var.instance_count
+  ami                    = data.aws_ami.amazon_linux.id
+  instance_type          = "t2.micro"
+  subnet_id              = aws_subnet.private[count.index % 2].id
+  vpc_security_group_ids = [aws_security_group.private_ec2.id]
+  key_name               = aws_key_pair.main.key_name
+
+  tags = {
+    Name    = "ctw-app-${count.index}"
+    Project = var.project
+    Role    = "Application"
+  }
+}

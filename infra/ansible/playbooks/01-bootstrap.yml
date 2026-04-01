@@ -1,0 +1,25 @@
+- name: Bootstrap EC2
+  hosts: apps
+  become: yes
+
+  tasks:
+
+    - name: Update packages
+      yum:
+        name: "*"
+        state: latest
+
+    - name: Install base packages
+      yum:
+        name:
+          - git
+          - curl
+          - htop
+          - unzip
+        state: present
+
+    - name: Create devops user
+      user:
+        name: devops
+        groups: wheel
+        append: yes

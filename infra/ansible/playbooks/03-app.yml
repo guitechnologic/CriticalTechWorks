@@ -1,0 +1,13 @@
+- name: Run test containers
+  hosts: apps
+  become: yes
+
+  tasks:
+
+    - name: Run nginx container
+      docker_container:
+        name: nginx
+        image: nginx
+        state: started
+        ports:
+          - "80:80"

@@ -11,47 +11,21 @@ def get_cars(marca, year):
     filtered = []
 
     for car in cars:
-
         # =========================
         # 🔹 CENÁRIO 1 - Ano mínimo
         # =========================
         if car["marca"].lower() == marca.lower() and car["year"] >= year:
+      # if car["marca"].lower() == marca.lower() and car["year"] == year:
+      # if car["marca"].lower() == marca.lower():
             filtered.append(car)
 
-        # =========================
-        # 🔹 CENÁRIO 2 - Ano exato
-        # =========================
-        # if car["marca"].lower() == marca.lower() and car["year"] == year:
-        #     filtered.append(car)
-
-        # =========================
-        # 🔹 CENÁRIO 3 - Só marca
-        # =========================
-        # if car["marca"].lower() == marca.lower():
-        #     filtered.append(car)
-
-    # =========================
-    # 🔹 ORDENAÇÃO 1 - Por ano (desc)
-    # =========================
     sorted_cars = sorted(filtered, key=lambda car: car["year"], reverse=True)
-
-    # =========================
-    # 🔹 ORDENAÇÃO 2 - Por nome (A → Z)
-    # =========================
-    # sorted_cars = sorted(filtered, key=lambda car: car["name"])
-
-    # =========================
-    # 🔹 ORDENAÇÃO 3 - Ano + nome
-    # =========================
-    # sorted_cars = sorted(filtered, key=lambda car: (car["year"], car["name"]), reverse=True)
-
-    # =========================
-    # 🔹 TOP N
-    # =========================
+  # sorted_cars = sorted(filtered, key=lambda car: car["name"])
+  # sorted_cars = sorted(filtered, key=lambda car: (car["year"], car["name"]), reverse=True)
+ 
     top = sorted_cars[:2]
 
     return top
-
 
 result = get_cars("Honda", 2020)
 
