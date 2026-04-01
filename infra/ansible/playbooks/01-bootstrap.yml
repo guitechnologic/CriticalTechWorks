@@ -3,6 +3,8 @@
   become: yes
 
   tasks:
+    - name: Install python for Ansible
+      raw: sudo dnf install -y python3
 
     - name: Update packages
       yum:
