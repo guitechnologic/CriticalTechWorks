@@ -36,23 +36,8 @@ resource "aws_instance" "bastion" {
 }
 
 ########################################
-# EC2 Privada (futura aplicação)
+# EC2 Privadas (Aplicação)
 ########################################
-resource "aws_instance" "private_app" {
-  ami                    = data.aws_ami.amazon_linux.id
-  instance_type          = "t3.micro"
-  subnet_id              = aws_subnet.private[0].id
-  vpc_security_group_ids = [aws_security_group.private_ec2.id]
-  key_name               = aws_key_pair.main.key_name
-
-  tags = {
-    Name    = "ctw-private-app"
-    Project = var.project
-    Role    = "Application"
-  }
-}
-
-
 resource "aws_instance" "private_app" {
   count                  = var.instance_count
   ami                    = data.aws_ami.amazon_linux.id
