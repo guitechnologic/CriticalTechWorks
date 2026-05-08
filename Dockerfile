@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # comando padrão ao iniciar container
-CMD ["python", "app/main.py"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
