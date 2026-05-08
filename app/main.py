@@ -1,6 +1,7 @@
+import random
+
 from fastapi import FastAPI
 from pydantic import BaseModel
-import random
 
 app = FastAPI(title="Vehicle Telemetry API")
 
