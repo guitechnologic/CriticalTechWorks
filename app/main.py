@@ -11,6 +11,15 @@ class Telemetry(BaseModel):
     fuel_level: int
 
 
+def calculate_risk(data: Telemetry) -> str:
+    if data.speed > 160 or data.engine_temp > 110:
+        return "HIGH"
+    elif data.speed > 130 or data.engine_temp > 95 or data.fuel_level < 15:
+        return "MEDIUM"
+    else:
+        return "LOW"
+
+
 @app.get("/")
 def home():
     return {"message": "Critical TechWorks app running 🚀"}
@@ -23,8 +32,10 @@ def health():
 
 @app.post("/telemetry")
 def receive_telemetry(data: Telemetry):
-    # aqui depois vamos mandar para fila, db, etc
+    risk = calculate_risk(data)
+
     return {
         "status": "received",
-        "vehicle": data.vehicle_id
+        "vehicle": data.vehicle_id,
+        "risk_level": risk
     }
